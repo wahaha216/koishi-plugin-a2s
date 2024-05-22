@@ -2,4 +2,9 @@
 
 [![npm](https://img.shields.io/npm/v/@wahaha216/koishi-plugin-a2s?style=flat-square)](https://www.npmjs.com/package/@wahaha216/koishi-plugin-a2s)
 
-get info from a2s protocol
+使用A2S协议获取起源引擎游戏信息
+
+## 使用方法
+```tex
+#a2s <ip>
+```

@@ -1,6 +1,6 @@
 {
   "name": "@wahaha216/koishi-plugin-a2s",
-  "description": "get info from a2s protocol",
+  "description": "使用A2S协议获取起源引擎游戏信息",
   "version": "0.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -15,8 +15,33 @@
     "koishi",
     "plugin"
   ],
-  "devDependencies": {},
   "peerDependencies": {
     "koishi": "^4.17.6"
+  },
+  "dependencies": {
+    "source-server-query": "^3.0.3",
+    "koishi-plugin-canvas": "^0.2.2"
+  },
+  "author": {
+    "name": "wahaha216"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wahaha216/koishi-plugin-a2s"
+  },
+  "koishi": {
+    "description": {
+      "en": "Get source game info from A2S protocol",
+      "zh": "使用A2S协议获取起源引擎游戏信息"
+    },
+    "service": {
+      "required": [
+        "canvas"
+      ]
+    },
+    "locales": [
+      "en",
+      "zh"
+    ]
   }
 }
