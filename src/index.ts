@@ -86,11 +86,11 @@ async function getImage(
 
   c!.fillStyle = "rgba(0, 0, 0, 0.5)";
   // ctx!.roundRect(10, 10, 480, 210, 20);
-  const x = 10;
-  const y = 10;
+  const x = 0;
+  const y = 0;
   const r = 20;
-  const w = canvas.width - 20;
-  const h = canvas.height - 20;
+  const w = canvas.width;
+  const h = canvas.height;
   c!.beginPath();
   c!.moveTo(x + r, y);
   c!.arcTo(x + w, y, x + w, y + h, r);
@@ -105,6 +105,10 @@ async function getImage(
   c!.textAlign = "center";
   c!.fillStyle = "white";
   c!.fillText(text, width / 2, 45);
+
+  c!.font = "14px 微软雅黑 bold";
+  text = info.game;
+  c!.fillText(text, width / 2, 63);
 
   c!.font = "16px 微软雅黑 bold";
   c!.textAlign = "left";
