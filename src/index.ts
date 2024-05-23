@@ -7,15 +7,21 @@ import { Info, Player } from "./types/a2s";
 
 export const name = "a2s";
 
-export interface Config {}
+export interface Config {
+  recogniseConnect?: boolean;
+}
 
-export const Config: Schema<Config> = Schema.object({});
+export const Config: Schema<Config> = Schema.object({
+  recogniseConnect: Schema.boolean()
+    .description("自动识别connect [ip]消息")
+    .default(true),
+});
 
 export const inject = {
   required: ["canvas"],
 };
 
-export function apply(ctx: Context) {
+export function apply(ctx: Context, config: Config) {
   const logger = ctx.logger("wahaha216-a2s");
   ctx
     .command("a2s <address:string>", "通过a2s协议查询服务器信息")
@@ -54,6 +60,18 @@ export function apply(ctx: Context) {
         await session.send([h("quote", { id }), h("img", { src: imgUrl })]);
       }
     });
+
+  ctx.on("message", (session) => {
+    if (config.recogniseConnect) {
+      const text = session.content;
+      const regexp =
+        /^connect (((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])|([a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?))(?::(?:[1-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$/i;
+      if (regexp.test(text)) {
+        const cmd = text.replace(/connect/i, "a2s");
+        session.execute(cmd);
+      }
+    }
+  });
 }
 
 async function getImage(
