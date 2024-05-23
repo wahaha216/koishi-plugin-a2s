@@ -11,7 +11,7 @@ declare type Info = {
   name: string;
   map: string;
   folder: string;
-  game: "Left 4 Dead 2";
+  game: "Left 4 Dead 2" | string;
   id: number;
   players: number;
   max_players: number;
