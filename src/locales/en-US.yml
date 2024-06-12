@@ -1,0 +1,15 @@
+commands:
+  a2s:
+    description: Get source game info from A2S protocol
+    examples: |-
+      a2s some.server.url.or.ip
+    messages:
+      map: map
+      players: players
+      version: version
+      environment: environment
+      nickname: nickname
+      score: score
+      duration: duration
+_config:
+  recogniseConnect: auto recongnise message "connect [ip]"

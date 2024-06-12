@@ -1,9 +1,11 @@
-import { Context, Schema, h } from "koishi";
+import { Context, Schema, Session, h } from "koishi";
 import { SourceQuerySocket } from "source-server-query";
 import { secondFormat } from "./utils/timeFormat";
 import { promises } from "node:dns";
-import {} from "koishi-plugin-canvas";
 import { Info, Player } from "./types/a2s";
+import {} from "koishi-plugin-canvas";
+import {} from "@koishijs/plugin-logger";
+import {} from "@koishijs/plugin-http";
 
 export const name = "a2s";
 
@@ -12,54 +14,55 @@ export interface Config {
 }
 
 export const Config: Schema<Config> = Schema.object({
-  recogniseConnect: Schema.boolean()
-    .description("自动识别connect [ip]消息")
-    .default(true),
+  recogniseConnect: Schema.boolean().default(true),
+}).i18n({
+  "zh-CN": require("./locales/zh-CN")._config,
+  "en-US": require("./locales/en-US")._config,
 });
 
 export const inject = {
-  required: ["canvas"],
+  required: ["canvas", "logger", "http"],
 };
 
 export function apply(ctx: Context, config: Config) {
+  ctx.i18n.define("en-US", require("./locales/en-US"));
+  ctx.i18n.define("zh-CN", require("./locales/zh-CN"));
+
   const logger = ctx.logger("wahaha216-a2s");
-  ctx
-    .command("a2s <address:string>", "通过a2s协议查询服务器信息")
-    .example("a2s some.server.url")
-    .action(async ({ session }, address) => {
-      const id = session.messageId;
+  ctx.command("a2s").action(async ({ session }, address) => {
+    const id = session.messageId;
 
-      const sp = address.split(":");
-      let ip = sp[0];
-      let port: number | string = 27015;
-      const ipReg =
-        /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/;
-      if (!ipReg.test(ip)) {
-        const resolver = new promises.Resolver();
-        const addresses = await resolver.resolve4(ip);
-        if (addresses.length) {
-          ip = addresses[0];
-        }
+    const sp = address.split(":");
+    let ip = sp[0];
+    let port: number | string = 27015;
+    const ipReg =
+      /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/;
+    if (!ipReg.test(ip)) {
+      const resolver = new promises.Resolver();
+      const addresses = await resolver.resolve4(ip);
+      if (addresses.length) {
+        ip = addresses[0];
       }
-      sp[1] && (port = sp[1]);
-      const query: SourceQuerySocket = new SourceQuerySocket();
-      let errMsg: Error;
-      const info = await query.info(ip, port).catch((err) => {
-        logger.error(err);
-        errMsg = err;
-      });
-
-      const players = await query.players(ip, port).catch((err) => {
-        logger.error(err);
-        if (!errMsg) errMsg = err;
-      });
-
-      if (info && players) {
-        const height = 200 + 20 * players.length;
-        const imgUrl = await getImage(ctx, height, 500, info, players);
-        await session.send([h("quote", { id }), h("img", { src: imgUrl })]);
-      }
+    }
+    sp[1] && (port = sp[1]);
+    const query: SourceQuerySocket = new SourceQuerySocket();
+    let errMsg: Error;
+    const info = await query.info(ip, port).catch((err) => {
+      logger.error(err);
+      errMsg = err;
     });
+
+    const players = await query.players(ip, port).catch((err) => {
+      logger.error(err);
+      if (!errMsg) errMsg = err;
+    });
+
+    if (info && players) {
+      const height = 200 + 20 * players.length;
+      const imgUrl = await getImage(ctx, session, height, 500, info, players);
+      await session.send([h.quote(id), h.image(imgUrl)]);
+    }
+  });
 
   ctx.on("message", (session) => {
     if (config.recogniseConnect) {
@@ -76,6 +79,7 @@ export function apply(ctx: Context, config: Config) {
 
 async function getImage(
   ctx: Context,
+  session: Session,
   height: number,
   width: number,
   info: Info,
@@ -100,32 +104,37 @@ async function getImage(
   c!.closePath();
   c!.fill();
 
-  c!.font = "24px 微软雅黑 bold";
+  c!.font = "24px Microsoft YaHei bold";
   let text = info.name;
   c!.textAlign = "center";
   c!.fillStyle = "white";
   c!.fillText(text, width / 2, 45);
 
-  c!.font = "14px 微软雅黑 bold";
+  c!.font = "14px Microsoft YaHei bold";
   text = info.game;
   c!.fillText(text, width / 2, 63);
 
-  c!.font = "16px 微软雅黑 bold";
+  c!.font = "16px Microsoft YaHei bold";
   c!.textAlign = "left";
-  text = `地图: ${info.map}`;
+
+  text = `${session.text(".map")}: ${info.map}`;
   c!.fillText(text, 50, 80);
 
-  text = `人数: ${info.players} / ${info.max_players}`;
+  text = `${session.text(".players")}: ${info.players} / ${info.max_players}`;
   c!.fillText(text, 300, 80);
 
-  text = `版本: ${info.version}`;
+  text = `${session.text(".version")}: ${info.version}`;
   c!.fillText(text, 50, 110);
 
-  text = "玩家昵称";
+  const environment = info.environment === "w" ? "windows" : "linux";
+  text = `${session.text(".environment")}: ${environment}`;
+  c!.fillText(text, 300, 110);
+
+  text = session.text(".nickname");
   c!.fillText(text, 50, 160);
-  text = "分数";
+  text = session.text(".score");
   c!.fillText(text, 280, 160);
-  text = "在线时长";
+  text = session.text(".duration");
   c!.fillText(text, 350, 160);
 
   // 分割线

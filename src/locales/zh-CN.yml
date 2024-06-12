@@ -1,0 +1,15 @@
+commands:
+  a2s:
+    description: 使用A2S协议获取起源引擎游戏信息
+    examples: |-
+      a2s some.server.url.or.ip
+    messages:
+      map: 地图
+      players: 人数
+      version: 版本
+      environment: 平台
+      nickname: 玩家昵称
+      score: 分数
+      duration: 在线时长
+_config:
+  recogniseConnect: 自动识别connect [ip]消息
