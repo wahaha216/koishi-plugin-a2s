@@ -11,6 +11,7 @@
   "license": "MIT",
   "scripts": {},
   "keywords": [
+    "a2s",
     "chatbot",
     "koishi",
     "plugin"
@@ -19,8 +20,7 @@
     "koishi": "^4.17.6"
   },
   "dependencies": {
-    "source-server-query": "^3.0.3",
-    "koishi-plugin-canvas": "^0.2.2"
+    "source-server-query": "^3.0.3"
   },
   "author": {
     "name": "wahaha216"
@@ -36,7 +36,9 @@
     },
     "service": {
       "required": [
-        "canvas"
+        "canvas",
+        "logger",
+        "http"
       ]
     },
     "locales": [
