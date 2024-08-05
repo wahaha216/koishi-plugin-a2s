@@ -52,15 +52,20 @@ export function apply(ctx: Context, config: Config) {
       errMsg = err;
     });
 
-    const players = await query.players(ip, port).catch((err) => {
-      logger.error(err);
-      if (!errMsg) errMsg = err;
-    });
+    let players: Player[] | void;
+    if (!errMsg) {
+      players = await query.players(ip, port).catch((err) => {
+        logger.error(err);
+        errMsg = err;
+      });
+    }
 
     if (info && players) {
       const height = 200 + 20 * players.length;
       const imgUrl = await getImage(ctx, session, height, 500, info, players);
       await session.send([h.quote(id), h.image(imgUrl)]);
+    } else {
+      await session.send([h.quote(id), h.text("服务器无响应")]);
     }
   });
 
