@@ -110,53 +110,53 @@ async function getImage(
   c!.fill();
 
   c!.font = "24px Microsoft YaHei bold";
-  let text = info.name;
+  let text = info.game;
   c!.textAlign = "center";
   c!.fillStyle = "white";
   c!.fillText(text, width / 2, 45);
 
   c!.font = "14px Microsoft YaHei bold";
-  text = info.game;
-  c!.fillText(text, width / 2, 63);
+  text = info.name;
+  c!.fillText(text, width / 2, 65);
 
   c!.font = "16px Microsoft YaHei bold";
   c!.textAlign = "left";
 
   text = `${session.text(".map")}: ${info.map}`;
-  c!.fillText(text, 50, 80);
+  c!.fillText(text, 50, 85);
 
   text = `${session.text(".players")}: ${info.players} / ${info.max_players}`;
-  c!.fillText(text, 300, 80);
+  c!.fillText(text, 300, 85);
 
   text = `${session.text(".version")}: ${info.version}`;
-  c!.fillText(text, 50, 110);
+  c!.fillText(text, 50, 115);
 
   const environment = info.environment === "w" ? "windows" : "linux";
   text = `${session.text(".environment")}: ${environment}`;
-  c!.fillText(text, 300, 110);
+  c!.fillText(text, 300, 115);
 
   text = session.text(".nickname");
-  c!.fillText(text, 50, 160);
+  c!.fillText(text, 50, 165);
   text = session.text(".score");
-  c!.fillText(text, 280, 160);
+  c!.fillText(text, 280, 165);
   text = session.text(".duration");
-  c!.fillText(text, 350, 160);
+  c!.fillText(text, 350, 165);
 
   // 分割线
   c!.beginPath();
-  c!.moveTo(50, 170);
-  c!.lineTo(450, 170);
+  c!.moveTo(50, 175);
+  c!.lineTo(450, 175);
   c!.closePath();
   c!.strokeStyle = "white";
   c!.stroke();
 
   players.forEach((p, index) => {
     text = p.name;
-    c!.fillText(text, 50, 190 + 20 * index);
+    c!.fillText(text, 50, 195 + 20 * index);
     text = `${p.score}`;
-    c!.fillText(text, 280, 190 + 20 * index);
+    c!.fillText(text, 280, 195 + 20 * index);
     text = secondFormat(p.duration);
-    c!.fillText(text, 350, 190 + 20 * index);
+    c!.fillText(text, 350, 195 + 20 * index);
   });
   return canvas.toDataURL("image/png");
 }
