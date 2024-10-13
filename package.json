@@ -1,7 +1,7 @@
 {
   "name": "@wahaha216/koishi-plugin-a2s",
   "description": "使用A2S协议获取起源引擎游戏信息",
-  "version": "0.0.5",
+  "version": "1.0.0-alpha.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
