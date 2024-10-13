@@ -1,8 +1,7 @@
 commands:
   a2s:
     description: Get source game info from A2S protocol
-    examples: |-
-      a2s some.server.url.or.ip
+    examples: a2s some.server.url.or.ip
     messages:
       map: map
       players: players
@@ -11,5 +10,44 @@ commands:
       nickname: nickname
       score: score
       duration: duration
+      noRespone: Server not responding
+  a2s-server:
+    add:
+      messages:
+        serverExist: A server with the name {0} already exists
+        serverAdded: Adding a server with the name {0} succeeded
+    edit:
+      options:
+        group: Simultaneous modification of the group to which it belongs
+      messages:
+        serverNotExist: Can't find the server with the name {0}.
+        serverEdited: Modifying the server with the name {0} succeeded
+    del:
+      messages:
+        serverNotExist: Can't find the server with the name {0}.
+        serverDeleted: Deletion of server with name “{0}” succeeded
+    info:
+      usage: Get information about the server with the index or name
+      messages:
+        cantFindServer: Can't find the server with the name {0}.
+        map: map
+        players: players
+        version: version
+        environment: environment
+        nickname: nickname
+        score: score
+        duration: duration
+        noRespone: Server not responding
+    list:
+      messages:
+        index: index
+        name: name
+        ip: IP
+    messages:
+      index: "#"
+      game: game
+      name: server name
+      environment: environment
+      players: players
 _config:
   recogniseConnect: auto recongnise message "connect [ip]"

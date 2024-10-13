@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据库中的服务器列表</title>
+  </head>
+  <body>
+    <table class="table" border>
+      <thead>
+        <tr>
+          <th class="index">序号</th>
+          <th class="name">名称</th>
+          <th class="ip">ip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="index">100</td>
+          <td class="name">
+            <div class="name-no-warp">wowowo</div>
+          </td>
+          <td class="ip">
+            <div class="ip-no-warp">wowowo.wahaha216.top:25563</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+  <style>
+    html {
+      width: 500px;
+      color: #fff;
+      border-radius: 20px;
+    }
+    body {
+      margin: 0;
+      background-color: #000;
+    }
+    .table {
+      margin: 20px 10px;
+      width: calc(100% - 20px);
+      text-align: left;
+      border-collapse: collapse;
+      border: none;
+    }
+    .table .index {
+      border: none;
+      width: 50px;
+    }
+    .table .name {
+      border: none;
+      width: 100px;
+    }
+    .table .name .name-no-warp {
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .table .ip {
+      border: none;
+      width: 330px;
+    }
+    .table .ip .ip-no-warp {
+      width: 330px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .table thead .index,
+    .table thead .name,
+    .table thead .ip {
+      border-bottom: 2px solid white;
+      padding-bottom: 5px;
+    }
+  </style>
+</html>

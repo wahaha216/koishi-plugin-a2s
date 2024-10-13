@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>服务器列表</title>
+  </head>
+  <body>
+    <table class="table" border>
+      <thead>
+        <tr>
+          <th class="index">序号</th>
+          <th class="game">游戏</th>
+          <th class="name">服务器名称</th>
+          <th class="platform">environment</th>
+          <th class="players">人数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="index">100</td>
+          <td class="game">
+            <div class="game-no-warp">Counter-Strike: Global Offensive</div>
+          </td>
+          <td class="name">
+            <div class="name-no-warp">
+              这是一个超长的服务器名称这是一个超长的服务器名称这是一个超长的服务器名称这是一个超长的服务器名称这是一个超长的服务器名称
+            </div>
+          </td>
+          <td class="platform">
+            <div class="platform-align"></div>
+          </td>
+          <td class="players">55/155</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+  <style>
+    html {
+      width: 800px;
+      color: #fff;
+      border-radius: 20px;
+    }
+    body {
+      margin: 0;
+      background-color: #000;
+    }
+    .table {
+      margin: 20px 10px;
+      width: calc(100% - 20px);
+      text-align: left;
+      border-collapse: collapse;
+      border: none;
+    }
+    .table .index {
+      border: none;
+      width: 40px;
+    }
+    .table .game {
+      border: none;
+      width: 200px;
+    }
+    .table .game .game-no-warp {
+      width: 190px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .table .name {
+      border: none;
+    }
+    .table .name .name-no-warp {
+      width: 360px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .table .platform {
+      border: none;
+      width: 80px;
+    }
+    .table .platform .platform-align {
+      display: flex;
+    }
+    .table .players {
+      border: none;
+      width: 80px;
+    }
+    .table thead .index,
+    .table thead .game,
+    .table thead .name,
+    .table thead .platform,
+    .table thead .players {
+      border-bottom: 2px solid white;
+      padding-bottom: 5px;
+    }
+  </style>
+</html>

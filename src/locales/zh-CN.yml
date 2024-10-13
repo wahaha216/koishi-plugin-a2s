@@ -1,15 +1,53 @@
 commands:
   a2s:
     description: 使用A2S协议获取起源引擎游戏信息
-    examples: |-
-      a2s some.server.url.or.ip
+    examples: a2s some.server.url.or.ip
     messages:
       map: 地图
       players: 人数
       version: 版本
-      environment: 平台
+      environment: 环境
       nickname: 玩家昵称
       score: 分数
       duration: 在线时长
+      noRespone: 服务器无响应
+  a2s-server:
+    add:
+      messages:
+        serverExist: 已存在名称为 "{0}" 的服务器
+        serverAdded: 添加名称为 "{0}" 的服务器成功
+    edit:
+      options:
+        group: 同时修改所属组
+      messages:
+        serverNotExist: 找不到名称为 "{0}" 的服务器
+        serverEdited: 修改名称为 "{0}" 的服务器成功
+    del:
+      messages:
+        serverNotExist: 找不到名称为 "{0}" 的服务器
+        serverDeleted: 删除名称为 "{0}" 的服务器成功
+    info:
+      usage: 获取对应序号或者名称的服务器信息
+      messages:
+        cantFindServer: 找不到名称为 "{0}" 的服务器
+        map: 地图
+        players: 人数
+        version: 版本
+        environment: 环境
+        nickname: 玩家昵称
+        score: 分数
+        duration: 在线时长
+        noRespone: 服务器无响应
+    list:
+      messages:
+        index: 序号
+        name: 名称
+        ip: IP
+    messages:
+      index: 序号
+      game: 游戏名称
+      name: 服务器名称
+      environment: 环境
+      players: 人数
 _config:
   recogniseConnect: 自动识别connect [ip]消息
